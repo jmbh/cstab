@@ -1,10 +1,12 @@
 Package: cstab
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Selection of Number of Clusters via Normalized Clustering Instability
 Version: 0.1
 Date: 2016-07-26
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
-LazyData: TRUE
+Author: Jonas Haslbeck, Dirk Wulff
+Maintainer: Jonas Haslbeck <jonashaslbeck@gmail.com>
+Description: Selection of the number of clusters in cluster analysis using stability methods.
+BugReports: https://github.com/jmbh/cstab/issues
+License: GPL (>= 2)
+Imports: Rcpp (>= 0.11.4), cluster, fastcluster, flexclust
+LinkingTo: Rcpp

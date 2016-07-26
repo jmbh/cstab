@@ -1,1 +1,16 @@
-exportPattern("^[[:alpha:]]+")
+
+# Rcpp business
+useDynLib(cstab)
+importFrom(Rcpp, evalCpp)
+
+# Import Packages
+importFrom(flexclust, kcca)
+importFrom(flexclust, kccaFamily)
+importFrom(fastcluster, hclust)
+importFrom(cluster, silhouette)
+
+
+# Export Functions
+export(cDistance, cStability)
+
+S3method(print, cstab)
