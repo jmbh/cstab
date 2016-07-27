@@ -81,6 +81,7 @@ cDistance <- function(data, # n x p data matrix
                   'WCD_syn'=l_WCD_syntetic,
                   'Gaps'= Gaps,
                   'silhouettes'=sil,
+                  'slopes'=slope,
                   'jumps'=jump)
 
   return(outlist)
