@@ -40,7 +40,6 @@ GetMeasures <- function(data,
     }
   }
 
-
   # calc distance matric
   dmat <- as.matrix(dist(data))
 
@@ -62,11 +61,23 @@ GetMeasures <- function(data,
   }
 
   # calc MSE (for jump statistic)
+
+  # get centers
+  if(method == 'kmeans') {
+    centers <- km_model@centers
+  } else {
+    data_or <- as.data.frame(data)
+    data_or$cl <- cl
+    data_or <- data_or[order(data_or$cl),]
+    centers <- matrix(NA, k, ncol(data))
+    for(kk in 1:k) centers[kk,] <- colMeans(data_or[data_or$cl==kk, -(ncol(data)+1)])
+  }
+
   if(type=='data') {
     v_mse <- numeric(nrow(data))
     if(k>1) {
       for(i in 1:nrow(data)) {
-        diffs <- (data[i,] - km_model@centers[km_model@cluster[i],])
+        diffs <- (data[i,] - centers[km_model@cluster[i],])
         mse <- t(diffs) %*% diffs
         v_mse[i] <- mse
       }
@@ -82,7 +93,7 @@ GetMeasures <- function(data,
     MSE <- NULL
   }
 
-  outlist <- list('WCD' = WCD, 'Sil'=Sil, 'MSE'=MSE)
+  outlist <- list('WCD' = WCD, 'Sil'=Sil, 'MSE'=MSE, 'Centers'=centers)
   return(outlist)
 }
 
