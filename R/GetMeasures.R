@@ -63,14 +63,18 @@ GetMeasures <- function(data,
   # calc MSE (for jump statistic)
 
   # get centers
-  if(method == 'kmeans') {
-    centers <- km_model@centers
+  if(k==1) {
+    centers <- apply(data, 2, mean)
   } else {
-    data_or <- as.data.frame(data)
-    data_or$cl <- cl
-    data_or <- data_or[order(data_or$cl),]
-    centers <- matrix(NA, k, ncol(data))
-    for(kk in 1:k) centers[kk,] <- colMeans(data_or[data_or$cl==kk, -(ncol(data)+1)])
+    if(method == 'kmeans') {
+      centers <- km_model@centers
+    } else {
+      data_or <- as.data.frame(data)
+      data_or$cl <- cl
+      data_or <- data_or[order(data_or$cl),]
+      centers <- matrix(NA, k, ncol(data))
+      for(kk in 1:k) centers[kk,] <- colMeans(data_or[data_or$cl==kk, -(ncol(data)+1)])
+    } 
   }
 
   if(type=='data') {
