@@ -77,11 +77,13 @@ GetMeasures <- function(data,
     } 
   }
 
+  if(method == 'kmeans') cl <- km_model@cluster
+  
   if(type=='data') {
     v_mse <- numeric(nrow(data))
     if(k>1) {
       for(i in 1:nrow(data)) {
-        diffs <- (data[i,] - centers[km_model@cluster[i],])
+        diffs <- (data[i,] - centers[cl[i],])
         mse <- t(diffs) %*% diffs
         v_mse[i] <- mse
       }
