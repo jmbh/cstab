@@ -1,88 +1,141 @@
-
+#' Selection of number of clusters via distance-based measures
+#'
+#' Selection of number of clusters via \emph{gap statistic}, \emph{jump statistic}, and
+#'    \emph{slope statistic}
+#'
+#' @param data a n x p data matrix of type numeric.
+#' @param kseq a vector with considered numbers clusters k > 1
+#' @param method character string indicating the clustering algorithm. 'kmeans' for the
+#'    k-means algorithm, 'hierarchical' for hierarchical clustering.
+#' @param linkage character specifying the linkage criterion, in case
+#'    \code{type='hierarchical'}. The available options are "single", "complete",
+#'    "average", "mcquitty", "ward.D", "ward.D2", "centroid" or "median". See
+#'    \link[stats]{hclust}.
+#' @param kmIter integer specifying the the number of restarts of the k-means algorithm
+#'    in order to avoid local minima.
+#' @param gapIter integer specifying the number of simulated datasets to compute the
+#'    \emph{gap statistic} (see Tibshirani et al., 2001).
+#'
+#' @return a list with the optimal numbers of cluster determined by the \emph{gap statistic}
+#'    (Tibshirani et al., 2001), the \emph{jump Statistic} (Sugar & James, 2011) and the
+#'    \emph{slope statistic} (Fujita et al., 2014). Along the function returns the \emph{gap},
+#'    \emph{jump} and \code{slope} for each k in \code{kseq}.
+#'
+#' @references
+#'   Tibshirani, R., Walther, G., & Hastie, T. (2001). Estimating the number of clusters in a
+#'   data set via the gap statistic. \emph{Journal of the Royal Statistical Society: Series B
+#'   (Statistical Methodology), 63}(2), 411-423.
+#'
+#'   Sugar, C. A., & James, G. M. (2011). Finding the number of clusters in a dataset. \emph{Journal
+#'   of the American Statistical Association, 98}(463), 750-763,
+#'
+#'   Fujita, A., Takahashi, D. Y., & Patriota, A. G. (2014). A non-parametric method to estimate
+#'   the number of clusters. \emph{Computational Statistics & Data Analysis, 73}, 27-39.
+#'
+#' @author
+#'   Dirk U. Wulff <dirk.wulff@gmail.com>
+#'   Jonas M. B. Haslbeck  <jonas.haslbeck@gmail.com>
+#'
+#' @examples
+#' \dontrun{
+#'   # Generate Data from Gaussian Mixture
+#'   s <- .1
+#'   n <- 50
+#'   data <- rbind(cbind(rnorm(n, 0, s), rnorm(n, 0, s)),
+#'                 cbind(rnorm(n, 1, s), rnorm(n, 1, s)),
+#'                 cbind(rnorm(n, 0, s), rnorm(n, 1, s)),
+#'                 cbind(rnorm(n, 1, s), rnorm(n, 0, s)))
+#'   plot(data)
+#'
+#'  # Selection of Number of Clusters using Distance-based Measures
+#'  cDistance(data, kseq=2:10)
+#'  }
+#'
+#' @export
 
 cDistance <- function(data, # n x p data matrix
                       kseq, #sequence of ks to be checked
                       method = 'kmeans', # or: hiearchical
                       linkage = 'complete',
                       kmIter = 10, # restarts of k means algorithm
-                      RunsGap = 10) # number of simulated datasets in gap statistic
+                      gapIter = 10) # number of simulated datasets in gap statistic
 {
 
-  # ----- Input Checks -----
+  # ----- INPUT TESTS
 
   # On Data
   if(sum(is.na(data))>0) stop('No missing values permitted!')
+
   # On k-sequence
   if(1 %in% kseq) stop('Please select a k sequence starting with 2: {2,3,...K}!')
+
   # On type
   if(method %in% c('kmeans', 'hierarchical'))
 
 
-  # ----- Calculate Aux Variables -----
+  # ----- HELPERS
 
-  n <- nrow(data)
-  dims <- ncol(data)
+  n    = nrow(data)
+  dims = ncol(data)
+  if(!1 %in% kseq) kseq = c(1,kseq)
 
 
-  # ----- run clustering clustering on real data -----
+  # ----- EVALUATE REAL DATA
 
-  l_WCD_data <- l_Sil <- l_MSE <-  list()
-  for(k in c(1, kseq)) {
-    obj <- GetMeasures(data, k, method=method, linkage=linkage, kmIter = kmIter, type = 'data')
-    l_WCD_data[[k]] <- obj$WCD
-    l_Sil[[k]] <- obj$Sil
-    l_MSE[[k]] <- obj$MSE
-  }
-  l_WCD_data <- unlist(l_WCD_data)
-  l_Sil <- unlist(l_Sil)
-  l_MSE <- unlist(l_MSE)
-
-  # ----- run clustering clustering on synthetic data (for Gap Statistic) -----
-
-  l_WCD_syndata_runs <- list()
-  for(runs in 1:RunsGap) {
-    l_WCD_syndata1 <- list()
-    data_synt <- UniformData(data)
-    for(k in c(1,kseq)) {
-      obj <- GetMeasures(data_synt, k, method=method, linkage=linkage, kmIter = kmIter, type = 'simulated')
-      l_WCD_syndata1[[k]] <- obj$WCD
+  WCD <- Sil <- MSE <- numeric()
+  for(k in kseq) {
+    obj = getMeasures(data, k, method=method, linkage=linkage, kmIter = kmIter, measures = c('wcd','sil','mse'))
+    WCD[k] = obj$WCD
+    Sil[k] = obj$Sil
+    MSE[k] = obj$MSE
     }
-    l_WCD_syndata_runs[[runs]] <- unlist(l_WCD_syndata1)
-  }
-  l_WCD_syntetic <- colMeans(do.call(rbind, l_WCD_syndata_runs))
 
 
-  # ----- Compute Measures -----
+  # ----- EVALUATE SYNTHETIC DATA (Gap-statistic)
+
+  WCD_runs = matrix(NA,nrow=gapIter, ncol=length(kseq))
+  for(i in 1:gapIter) {
+    data_syn = UniformData(data)
+    WCDs = numeric()
+    for(j in 1:length(kseq)) {
+      k = kseq[j]
+      obj = getMeasures(data_syn, k, method=method, linkage=linkage, kmIter = kmIter, measures = c('wcd'))
+      WCDs[j] = obj$WCD
+      }
+    WCD_runs[i,] = WCDs
+    }
+  WCD_syn = colMeans(WCD_runs)
+
+  # ----- COMPUTE MEASURES
 
   # Gap Statistic
-  WCD_data_log <- log(l_WCD_data)
-  WCD_syn_log <- log(l_WCD_syntetic)
+  WCD_dat_log = log(WCD)
+  WCD_syn_log = log(WCD_syn)
+  WCD_dat_log = WCD_dat_log - WCD_dat_log[1]
+  WCD_syn_log = WCD_syn_log - WCD_syn_log[1]
+  gap      = WCD_syn_log - WCD_dat_log
+  kopt_gap = kseq[gap == max(gap)]
 
-  WCD_data_log <- WCD_data_log - WCD_data_log[1]
-  WCD_syn_log <- WCD_syn_log - WCD_syn_log[1]
-
-  Gaps <- WCD_syn_log-WCD_data_log
 
   # Slope Statistic
-  sil <- l_Sil
-  p <- 1
-  slope <- -(sil[-1] - sil[-length(sil)]) * sil[-1]^p
-  kopt_slope <- which.max(slope)+1 #add one because we have sequence 2:...
+  p = 1
+  slope = -(Sil[-1] - Sil[-length(Sil)]) * Sil[-1]^p
+  kopt_slope = kseq[slope == max(slope)]
 
   ## Jump Statistic
-  MSE_transf <- l_MSE^(- dims/2)
-  jump <- (MSE_transf - c(0, MSE_transf[-length(MSE_transf)]))[-1]
-  kopt_Jump <- which.max(jump) + 1 #add one because we have sequence 2:...
+  MSE_tr = MSE^(- dims/2)
+  jump   = (MSE_tr - c(0, MSE_tr[-length(MSE_tr)])) #[-1]
+  kopt_jump = kseq[jump == max(jump)]
 
-  outlist <- list('kOpt_Gap'=which.max(Gaps),
-                  'kOpt_Slope'=kopt_slope,
-                  'kOpt_Jump'=kopt_Jump,
-                  'WCD_data'=l_WCD_data,
-                  'WCD_syn'=l_WCD_syntetic,
-                  'Gaps'= Gaps,
-                  'silhouettes'=sil,
-                  'slopes'=slope,
-                  'jumps'=jump)
+  outlist <- list('k_Gap'=kopt_gap,
+                  'k_Slope'=kopt_slope,
+                  'k_Jump'=kopt_jump,
+                  'WCD'=WCD,
+                  'WCD_syn'=WCD_syn,
+                  'Gaps'= gap,
+                  'Silhouettes'=Sil,
+                  'Slopes'=slope,
+                  'Jumps'=jump)
 
   return(outlist)
 

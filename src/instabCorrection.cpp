@@ -4,7 +4,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 double rootChoose(int n, int k, double root){
   double nomin = 1, denom = 1;
-  
+
   // comp nomin
   for(int i = n; i > k; i--){
     nomin *= std::pow(i,1/root);
@@ -17,7 +17,7 @@ double rootChoose(int n, int k, double root){
 
 // [[Rcpp::export]]
 double rootChooseLookup(int n, int k, std::vector<double> lookup){
-  double res, root; 
+  double res, root;
   int nLookup = lookup.size();
   if(n > (nLookup+1)){
     root = lookup[0];
@@ -51,22 +51,11 @@ double rootFact(int n, double root){
 
 
 // [[Rcpp::export]]
-std::vector<double> lookup(int n, double root){
-  std::vector<double> lookupTab;
-  lookupTab.push_back(root);
-  for(int i = 0; i < (n+1); i++){
-    lookupTab.push_back(rootFact(i+1,root));
-    }
-  return(lookupTab);
-  }
-
-
-// [[Rcpp::export]]
 double rootCombLookup(std::vector<double> ns,  std::vector<double> lookup){
   double res = 1;
   int i, n = 0;
   for(i = 0; i < ns.size(); i++) n += ns[i];
-  for(i = 0; i < ns.size(); i++){ 
+  for(i = 0; i < ns.size(); i++){
     res *= rootChooseLookup(n,ns[i],lookup);
     //std::cout << res << '\n';
     n -= ns[i];
@@ -80,7 +69,7 @@ double stabExp(std::vector<double> ns,  std::vector<double> lookup){
   int i, k, n = 0;
   std::vector<double> nstmp;
   double totComb = rootCombLookup(ns,lookup);
-  for(i = 0; i < ns.size(); i++) n += ns[i];  
+  for(i = 0; i < ns.size(); i++) n += ns[i];
   for(i = 0; i < ns.size(); i++){
     k = round(ns[i]);
     if(k > 1){
@@ -100,5 +89,22 @@ double stabExp(std::vector<double> ns,  std::vector<double> lookup){
   return(res);
 }
 
-
+//' Create lookup table
+//'
+//' Create lookup table for faculties
+//'
+//' @param n integer specifying the number of
+//' @param root numeric specifying the root used to avoid
+//'   machine limit.
+//'
+//' @export
+// [[Rcpp::export]]
+std::vector<double> lookup(int n = 10000, double root = 200){
+  std::vector<double> lookupTab;
+  lookupTab.push_back(root);
+  for(int i = 0; i < (n+1); i++){
+    lookupTab.push_back(rootFact(i+1,root));
+    }
+  return(lookupTab);
+  }
 

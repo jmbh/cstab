@@ -3,10 +3,17 @@ Type: Package
 Title: Selection of Number of Clusters via Normalized Clustering Instability
 Version: 0.1
 Date: 2016-07-26
-Author: Jonas Haslbeck, Dirk Wulff
-Maintainer: Jonas Haslbeck <jonashaslbeck@gmail.com>
-Description: Selection of the number of clusters in cluster analysis using stability methods.
-BugReports: https://github.com/jmbh/cstab/issues
+Author: Jonas M. B. Haslbeck, Dirk U. Wulff
+Maintainer: Jonas M. B. Haslbeck <jonas.haslbeck@gmail.com>
+Description: Selection of the number of clusters in cluster analysis using
+    stability methods.
+BugReports: https://github.com/dwulff/cstab/issues
 License: GPL (>= 2)
-Imports: Rcpp (>= 0.11.4), cluster, fastcluster, flexclust
+Depends:
+    R (>= 3.1.0),
+	Rcpp (>= 0.11.4)
+Imports:
+    cluster,
+    fastcluster,
 LinkingTo: Rcpp
+RoxygenNote: 5.0.1
