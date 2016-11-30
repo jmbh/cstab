@@ -10,7 +10,8 @@ cluster_example
 }
 \description{
 An example, 2-dimensional dataset containing the 100 points for each of five
-  clusters arreanged in a circle.
+  bivariate normal distributions arranged equidistant along the outline of a
+  circle.
 }
 \details{
 To inspect execute \code{plot(cluster_example)}.

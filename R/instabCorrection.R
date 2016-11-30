@@ -1,7 +1,7 @@
 
 instabLookup = function(x,y){
-  a = stabExp(x,get('lkup',.GlobalEnv))
-  b = stabExp(y,get('lkup',.GlobalEnv))
+  a = stabExp(x,lkup)
+  b = stabExp(y,lkup)
   return(a * (1-b) + (1-a) * b)
   }
 
