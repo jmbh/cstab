@@ -1,7 +1,7 @@
 Package: cstab
 Type: Package
 Title: Selection of Number of Clusters via Normalized Clustering Instability
-Version: 0.1
+Version: 0.2
 Date: 2016-07-26
 Author: Jonas M. B. Haslbeck, Dirk U. Wulff
 Maintainer: Jonas M. B. Haslbeck <jonas.haslbeck@gmail.com>
