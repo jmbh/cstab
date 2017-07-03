@@ -102,13 +102,13 @@ cStability <- function(data, # n x p data matrix
     tmp_2 <- tmp_2[order(tmp_2)]
     ind[[b]] <- list(tmp_1,tmp_2)
     intersct <- intersect(tmp_1,tmp_2)
-    share[[b]] <- list(tmp_1 %in% intersct & !duplicated(tmp_1), tmp_2 %in% intersct & !duplicated(tmp_2))
+    share[[b]] <- list(tmp_1 %in% intersct & !duplicated(tmp_1), tmp_2 %in% intersct & !duplicated(tmp_2)) # leave duplicates in ?
     }
 
 
   # ---------- Calculate distance matrix ----------
 
-  distm = fast_dist(data)
+  distm = fast_dist(data) # maybe here?
 
   # ----- Loop over B comparisons -----
 
@@ -123,7 +123,7 @@ cStability <- function(data, # n x p data matrix
           kms_2 <- list()
           for(km_i in 1:kmIter) {
             kms_1[[km_i]] = stats::kmeans(data[ind[[b]][[1]],], centers = k)
-            kms_2[[km_i]] = stats::kmeans(data[ind[[b]][[1]],], centers = k)
+            kms_2[[km_i]] = stats::kmeans(data[ind[[b]][[2]],], centers = k) # this has to be 2
             }
           km_1 = kms_1[[which.min(sapply(kms_1,function(x) mean(x$tot.withinss)))]]
           km_2 = kms_2[[which.min(sapply(kms_1,function(x) mean(x$tot.withinss)))]]
@@ -132,7 +132,7 @@ cStability <- function(data, # n x p data matrix
             cl_2 = kmeans_predict(km_2, data = data)
             } else {
             cl_1 = km_1$cluster[share[[b]][[1]]]
-            cl_2 = km_1$cluster[share[[b]][[2]]]
+            cl_2 = km_2$cluster[share[[b]][[2]]]
             }
           }
 

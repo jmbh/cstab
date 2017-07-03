@@ -102,3 +102,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+
+static const R_CallMethodDef CallEntries[] = {
+    {"cstab_fast_dist", (DL_FUNC) &cstab_fast_dist, 2},
+    {"cstab_equal", (DL_FUNC) &cstab_equal, 1},
+    {"cstab_rootChoose", (DL_FUNC) &cstab_rootChoose, 3},
+    {"cstab_rootChooseLookup", (DL_FUNC) &cstab_rootChooseLookup, 3},
+    {"cstab_rootCombLookup", (DL_FUNC) &cstab_rootCombLookup, 2},
+    {"cstab_stabExp", (DL_FUNC) &cstab_stabExp, 2},
+    {"cstab_lookup", (DL_FUNC) &cstab_lookup, 2},
+    {"cstab_kmeans_predict", (DL_FUNC) &cstab_kmeans_predict, 2},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_cstab(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+}
