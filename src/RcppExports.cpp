@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // fast_dist
 NumericMatrix fast_dist(NumericMatrix x, int power);
-RcppExport SEXP cstab_fast_dist(SEXP xSEXP, SEXP powerSEXP) {
+RcppExport SEXP _cstab_fast_dist(SEXP xSEXP, SEXP powerSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,7 +19,7 @@ END_RCPP
 }
 // equal
 std::vector<bool> equal(std::vector<int> x);
-RcppExport SEXP cstab_equal(SEXP xSEXP) {
+RcppExport SEXP _cstab_equal(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -30,7 +30,7 @@ END_RCPP
 }
 // rootChoose
 double rootChoose(int n, int k, double root);
-RcppExport SEXP cstab_rootChoose(SEXP nSEXP, SEXP kSEXP, SEXP rootSEXP) {
+RcppExport SEXP _cstab_rootChoose(SEXP nSEXP, SEXP kSEXP, SEXP rootSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -43,7 +43,7 @@ END_RCPP
 }
 // rootChooseLookup
 double rootChooseLookup(int n, int k, std::vector<double> lookup);
-RcppExport SEXP cstab_rootChooseLookup(SEXP nSEXP, SEXP kSEXP, SEXP lookupSEXP) {
+RcppExport SEXP _cstab_rootChooseLookup(SEXP nSEXP, SEXP kSEXP, SEXP lookupSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -56,7 +56,7 @@ END_RCPP
 }
 // rootCombLookup
 double rootCombLookup(std::vector<double> ns, std::vector<double> lookup);
-RcppExport SEXP cstab_rootCombLookup(SEXP nsSEXP, SEXP lookupSEXP) {
+RcppExport SEXP _cstab_rootCombLookup(SEXP nsSEXP, SEXP lookupSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -68,7 +68,7 @@ END_RCPP
 }
 // stabExp
 double stabExp(std::vector<double> ns, std::vector<double> lookup);
-RcppExport SEXP cstab_stabExp(SEXP nsSEXP, SEXP lookupSEXP) {
+RcppExport SEXP _cstab_stabExp(SEXP nsSEXP, SEXP lookupSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -80,7 +80,7 @@ END_RCPP
 }
 // lookup
 std::vector<double> lookup(int n, double root);
-RcppExport SEXP cstab_lookup(SEXP nSEXP, SEXP rootSEXP) {
+RcppExport SEXP _cstab_lookup(SEXP nSEXP, SEXP rootSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -92,7 +92,7 @@ END_RCPP
 }
 // kmeans_predict
 std::vector<int> kmeans_predict(GenericVector kmeans, NumericMatrix data);
-RcppExport SEXP cstab_kmeans_predict(SEXP kmeansSEXP, SEXP dataSEXP) {
+RcppExport SEXP _cstab_kmeans_predict(SEXP kmeansSEXP, SEXP dataSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -104,14 +104,14 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"cstab_fast_dist", (DL_FUNC) &cstab_fast_dist, 2},
-    {"cstab_equal", (DL_FUNC) &cstab_equal, 1},
-    {"cstab_rootChoose", (DL_FUNC) &cstab_rootChoose, 3},
-    {"cstab_rootChooseLookup", (DL_FUNC) &cstab_rootChooseLookup, 3},
-    {"cstab_rootCombLookup", (DL_FUNC) &cstab_rootCombLookup, 2},
-    {"cstab_stabExp", (DL_FUNC) &cstab_stabExp, 2},
-    {"cstab_lookup", (DL_FUNC) &cstab_lookup, 2},
-    {"cstab_kmeans_predict", (DL_FUNC) &cstab_kmeans_predict, 2},
+    {"_cstab_fast_dist", (DL_FUNC) &_cstab_fast_dist, 2},
+    {"_cstab_equal", (DL_FUNC) &_cstab_equal, 1},
+    {"_cstab_rootChoose", (DL_FUNC) &_cstab_rootChoose, 3},
+    {"_cstab_rootChooseLookup", (DL_FUNC) &_cstab_rootChooseLookup, 3},
+    {"_cstab_rootCombLookup", (DL_FUNC) &_cstab_rootCombLookup, 2},
+    {"_cstab_stabExp", (DL_FUNC) &_cstab_stabExp, 2},
+    {"_cstab_lookup", (DL_FUNC) &_cstab_lookup, 2},
+    {"_cstab_kmeans_predict", (DL_FUNC) &_cstab_kmeans_predict, 2},
     {NULL, NULL, 0}
 };
 

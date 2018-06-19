@@ -17,4 +17,3 @@ An example, 2-dimensional dataset containing the 100 points for each of five
 To inspect execute \code{plot(cluster_example)}.
 }
 \keyword{datasets}
-

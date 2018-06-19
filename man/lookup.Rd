@@ -15,4 +15,3 @@ machine limit.}
 \description{
 Create lookup table for faculties
 }
-

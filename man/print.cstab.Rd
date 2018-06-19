@@ -18,4 +18,3 @@
 Jonas M. B. Haslbeck <jonas.haslbeck@gmail.com>
    Dirk U. Wulff <dirk.wulff@gmail.com>
 }
-

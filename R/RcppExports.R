@@ -2,27 +2,27 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 fast_dist <- function(x, power = 2L) {
-    .Call('cstab_fast_dist', PACKAGE = 'cstab', x, power)
+    .Call('_cstab_fast_dist', PACKAGE = 'cstab', x, power)
 }
 
 equal <- function(x) {
-    .Call('cstab_equal', PACKAGE = 'cstab', x)
+    .Call('_cstab_equal', PACKAGE = 'cstab', x)
 }
 
 rootChoose <- function(n, k, root) {
-    .Call('cstab_rootChoose', PACKAGE = 'cstab', n, k, root)
+    .Call('_cstab_rootChoose', PACKAGE = 'cstab', n, k, root)
 }
 
 rootChooseLookup <- function(n, k, lookup) {
-    .Call('cstab_rootChooseLookup', PACKAGE = 'cstab', n, k, lookup)
+    .Call('_cstab_rootChooseLookup', PACKAGE = 'cstab', n, k, lookup)
 }
 
 rootCombLookup <- function(ns, lookup) {
-    .Call('cstab_rootCombLookup', PACKAGE = 'cstab', ns, lookup)
+    .Call('_cstab_rootCombLookup', PACKAGE = 'cstab', ns, lookup)
 }
 
 stabExp <- function(ns, lookup) {
-    .Call('cstab_stabExp', PACKAGE = 'cstab', ns, lookup)
+    .Call('_cstab_stabExp', PACKAGE = 'cstab', ns, lookup)
 }
 
 #' Create lookup table
@@ -35,10 +35,10 @@ stabExp <- function(ns, lookup) {
 #'
 #' @export
 lookup <- function(n = 10000L, root = 200) {
-    .Call('cstab_lookup', PACKAGE = 'cstab', n, root)
+    .Call('_cstab_lookup', PACKAGE = 'cstab', n, root)
 }
 
 kmeans_predict <- function(kmeans, data) {
-    .Call('cstab_kmeans_predict', PACKAGE = 'cstab', kmeans, data)
+    .Call('_cstab_kmeans_predict', PACKAGE = 'cstab', kmeans, data)
 }
 

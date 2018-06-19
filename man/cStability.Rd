@@ -62,10 +62,6 @@ Selection of number of clusters via \emph{model-based} or \emph{model-free},
   }
 
 }
-\author{
-Dirk U. Wulff <dirk.wulff@gmail.com>
-   Jonas M. B. Haslbeck <jonas.haslbeck@gmail.com>
-}
 \references{
 Ben-Hur, A., Elisseeff, A., & Guyon, I. (2001). A stability based method for
    discovering structure in clustered data. \emph{Pacific symposium on biocomputing,
@@ -74,4 +70,7 @@ Ben-Hur, A., Elisseeff, A., & Guyon, I. (2001). A stability based method for
    Tibshirani, R., & Walther, G. (2005). Cluster validation by prediction strength.
    \emph{Journal of Computational and Graphical Statistics, 14}(3), 511-528.
 }
-
+\author{
+Dirk U. Wulff <dirk.wulff@gmail.com>
+   Jonas M. B. Haslbeck <jonas.haslbeck@gmail.com>
+}

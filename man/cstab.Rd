@@ -22,4 +22,3 @@ Selection of the number of clusters in cluster analysis using stability
 Dirk U. Wulff <dirk.wulff@gmail.com>
    Jonas M. B. Haslbeck <jonas.haslbeck@gmail.com>
 }
-

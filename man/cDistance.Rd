@@ -52,10 +52,6 @@ Selection of number of clusters via \emph{gap statistic}, \emph{jump statistic},
  }
 
 }
-\author{
-Dirk U. Wulff <dirk.wulff@gmail.com>
-  Jonas M. B. Haslbeck  <jonas.haslbeck@gmail.com>
-}
 \references{
 Tibshirani, R., Walther, G., & Hastie, T. (2001). Estimating the number of clusters in a
   data set via the gap statistic. \emph{Journal of the Royal Statistical Society: Series B
@@ -67,4 +63,7 @@ Tibshirani, R., Walther, G., & Hastie, T. (2001). Estimating the number of clust
   Fujita, A., Takahashi, D. Y., & Patriota, A. G. (2014). A non-parametric method to estimate
   the number of clusters. \emph{Computational Statistics & Data Analysis, 73}, 27-39.
 }
-
+\author{
+Dirk U. Wulff <dirk.wulff@gmail.com>
+  Jonas M. B. Haslbeck  <jonas.haslbeck@gmail.com>
+}
