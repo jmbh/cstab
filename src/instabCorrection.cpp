@@ -31,7 +31,7 @@ double rootChooseLookup(int n, int k, std::vector<double> lookup){
       }
     res = nomin/denom;
     } else {
-    if(n != k & k > 0){
+    if(n != k && k > 0){
       res = lookup[n] / (lookup[k]*lookup[n-k]);
       } else {
       res = 1;
