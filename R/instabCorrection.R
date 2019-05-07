@@ -5,6 +5,22 @@ instabLookup = function(x,y){
   return(a * (1-b) + (1-a) * b)
   }
 
+
+stabExp_simple = function(x) {
+  #print(x)
+  num = 0
+  for(i in 1:length(x)) if(x[i] > 1) num = num + choose(x[i],2)
+  num / choose(sum(x),2)
+  }
+
+instab_simple = function(x,y){
+  a = stabExp_simple(x)
+  b = stabExp_simple(y)
+  return(a * (1-b) + (1-a) * b)
+}
+
+
+
 #
 # rootComb = function(x,root = 1){
 #   n  = sum(x)
