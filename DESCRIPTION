@@ -1,13 +1,12 @@
 Package: cstab
 Type: Package
 Title: Selection of Number of Clusters via Normalized Clustering Instability
-Version: 0.2
-Date: 2016-07-26
+Version: 0.2-3
+Date: 2019-05-02
 Author: Jonas M. B. Haslbeck, Dirk U. Wulff
 Maintainer: Jonas M. B. Haslbeck <jonas.haslbeck@gmail.com>
-Description: Selection of the number of clusters in cluster analysis using
-    stability methods.
-BugReports: https://github.com/dwulff/cstab/issues
+Description: Selection of the number of clusters in cluster analysis using stability methods.
+BugReports: https://github.com/jmbh/cstab/issues
 License: GPL (>= 2)
 Depends:
     R (>= 3.1.0),
@@ -16,4 +15,4 @@ Imports:
     cluster,
     fastcluster,
 LinkingTo: Rcpp
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
