@@ -1,8 +1,8 @@
 Package: cstab
 Type: Package
 Title: Selection of Number of Clusters via Normalized Clustering Instability
-Version: 0.2-3
-Date: 2019-05-02
+Version: 0.2-4
+Date: 2019-06-19
 Maintainer: Jonas M. B. Haslbeck <jonas.haslbeck@gmail.com>
 Authors@R: c(
     person(c("Jonas","M. B."), "Haslbeck", role = c("aut", "cre"),
