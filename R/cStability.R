@@ -57,15 +57,15 @@
 #'
 #' @export
 
-cStability <- function(data, # n x p data matrix
-                       kseq = 2:20, # sequence of ks tested
-                       nB   = 10, # number of bootstrap comparisons
-                       norm = TRUE, # norm over pw equal assign,FALSE=as in Wang etal
-                       predict = TRUE, # use prediction approach, if FALSE, use brute pair in equal cluster approach
-                       method    = 'kmeans', # or 'hierarchical'
-                       linkage = 'complete', # or average, or ...
-                       kmIter  = 5,
-                       pbar = TRUE) # number of reruns of k-means algorithm
+cStability_orig <- function(data, # n x p data matrix
+                            kseq = 2:20, # sequence of ks tested
+                            nB   = 10, # number of bootstrap comparisons
+                            norm = TRUE, # norm over pw equal assign,FALSE=as in Wang etal
+                            predict = TRUE, # use prediction approach, if FALSE, use brute pair in equal cluster approach
+                            method    = 'kmeans', # or 'hierarchical'
+                            linkage = 'complete', # or average, or ...
+                            kmIter  = 5,
+                            pbar = TRUE) # number of reruns of k-means algorithm
 {
 
 
@@ -252,7 +252,7 @@ cStability <- function(data, # n x p data matrix
 #'
 #' @export
 
-cStability_diff <- function(data, # n x p data matrix
+cStability <- function(data, # n x p data matrix
                        kseq = 2:20, # sequence of ks tested
                        nB   = 10, # number of bootstrap comparisons
                        norm = TRUE, # norm over pw equal assign,FALSE=as in Wang etal
@@ -349,8 +349,8 @@ cStability_diff <- function(data, # n x p data matrix
       m_instab[b, which(kseq==k)] <- InStab
 
       # Normalize = TRUE
-      norm_val <- instabLookup(table(cl_1), table(cl_2))
-      m_instab_norm[b, which(kseq==k)] <- InStab - norm_val
+      cs <- instab_simple_var(table(cl_1), table(cl_2))
+      m_instab_norm[b, which(kseq==k)] <- (InStab - cs[1]) / cs[2]
 
     } # end for k
 
@@ -447,7 +447,7 @@ cStability_diff <- function(data, # n x p data matrix
 #'
 #' @export
 
-cStability_expdiff <- function(data, # n x p data matrix
+cStability_mEst <- function(data, # n x p data matrix
                                kseq = 2:20, # sequence of ks tested
                                nB   = 10, # number of bootstrap comparisons
                                norm = TRUE, # norm over pw equal assign,FALSE=as in Wang etal

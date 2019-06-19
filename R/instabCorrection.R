@@ -17,7 +17,15 @@ instab_simple = function(x,y){
   a = stabExp_simple(x)
   b = stabExp_simple(y)
   return(a * (1-b) + (1-a) * b)
-}
+  }
+
+instab_simple_var = function(x,y){
+  a = stabExp_simple(x)
+  b = stabExp_simple(y)
+  c1 = a * (1-b) + (1-a) * b
+  c2 = sqrt(a * (1-a)) * sqrt(b * (1-b))
+  return(c(c1, c2))
+  }
 
 
 
