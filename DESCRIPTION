@@ -3,8 +3,13 @@ Type: Package
 Title: Selection of Number of Clusters via Normalized Clustering Instability
 Version: 0.2-3
 Date: 2019-05-02
-Author: Jonas M. B. Haslbeck, Dirk U. Wulff
 Maintainer: Jonas M. B. Haslbeck <jonas.haslbeck@gmail.com>
+Authors@R: c(
+    person(c("Jonas","M. B."), "Haslbeck", role = c("aut", "cre"),
+    		email = "jonas.haslbeck@googlemail.com"),    
+	person(c("Dirk","U."), "Wulff", role = "aut",
+    		email = "dirk.wulff@gmail.com")
+    )
 Description: Selection of the number of clusters in cluster analysis using stability methods.
 BugReports: https://github.com/jmbh/cstab/issues
 License: GPL (>= 2)
