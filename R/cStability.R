@@ -349,7 +349,13 @@ cStability <- function(data, # n x p data matrix
       m_instab[b, which(kseq==k)] <- InStab
 
       # Normalize = TRUE
-      cs <- instab_simple_var(table(cl_1), table(cl_2))
+      M_1 = table(cl_1)
+      M_2 = table(cl_2)
+      if(predict == FALSE) {
+        M_1 = M_1 * (nrow(data) / sum(M_1))
+        M_2 = M_2 * (nrow(data) / sum(M_2))
+        }
+      cs <- instab_simple_var(M_1, M_2)
       m_instab_norm[b, which(kseq==k)] <- .5 * (InStab - cs[1]) / cs[2]
 
     } # end for k
