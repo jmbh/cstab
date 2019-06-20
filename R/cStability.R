@@ -350,7 +350,7 @@ cStability <- function(data, # n x p data matrix
 
       # Normalize = TRUE
       cs <- instab_simple_var(table(cl_1), table(cl_2))
-      m_instab_norm[b, which(kseq==k)] <- (InStab - cs[1]) / cs[2]
+      m_instab_norm[b, which(kseq==k)] <- .5 * (InStab - cs[1]) / cs[2]
 
     } # end for k
 
@@ -507,6 +507,7 @@ cStability_mEst <- function(data, # n x p data matrix
 
     # container for ms
     m_ms <- matrix(NA, nB * 2, k) # storage: normalization
+    new_ns <- rep(0, nB)
 
     for(b in 1:nB) {
 
@@ -538,9 +539,14 @@ cStability_mEst <- function(data, # n x p data matrix
         #print(proc.time()[3] - t)
       }
 
+      # orig n
+      new_n = length(cl_1)
+
       # check for equality of clusterings
       eq_1 = equal(cl_1)
       eq_2 = equal(cl_2)
+
+      # calculate instability
       InStab <- mean(eq_1 != eq_2)
 
       # Normalize = FALSE
@@ -556,12 +562,17 @@ cStability_mEst <- function(data, # n x p data matrix
       m_ms[2*b - 1,] = m_1
       m_ms[2*b,] = m_2
 
-    } # end for k
+      # store new ns
+      new_ns[b] = new_n
+
+    } # end for B
 
     if(pbar) utils::setTxtProgressBar(pb, k)
 
     # Gather Ms
     m_ms_M = colMeans(m_ms)
+    if(predict == FALSE) m_ms_M = m_ms_M * (nrow(data) / mean(new_ns))
+    print(paste0(sum(m_ms_M),"  -  ",instab_simple(m_ms_M, m_ms_M),"  -  ",paste0(m_ms_M,collapse=' ')))
 
     # compute instab
     m_exp_instab[which(kseq==k)] = instab_simple(m_ms_M, m_ms_M)
@@ -589,7 +600,9 @@ cStability_mEst <- function(data, # n x p data matrix
                   "instab_path"=m_instab_M,
                   "instab_path_norm"=m_instab_norm_M,
                   "instab_path_matrix"=m_instab,
-                  "instab_path_nrom_matrix"=NA,
+                  "instab_path_norm_matrix"=NA,
+                  "c_1"=m_exp_instab,
+                  "c_2"=sqrt(m_exp_instab/2)**2,
                   'call'=f_call)
 
   class(outlist) <- c('list', 'cstab', 'cStability')
