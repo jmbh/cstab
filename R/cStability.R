@@ -578,7 +578,7 @@ cStability_mEst <- function(data, # n x p data matrix
     # Gather Ms
     m_ms_M = colMeans(m_ms)
     if(predict == FALSE) m_ms_M = m_ms_M * (nrow(data) / mean(new_ns))
-    print(paste0(sum(m_ms_M),"  -  ",instab_simple(m_ms_M, m_ms_M),"  -  ",paste0(m_ms_M,collapse=' ')))
+    #print(paste0(sum(m_ms_M),"  -  ",instab_simple(m_ms_M, m_ms_M),"  -  ",paste0(m_ms_M,collapse=' ')))
 
     # compute instab
     m_exp_instab[which(kseq==k)] = instab_simple(m_ms_M, m_ms_M)
