@@ -155,7 +155,7 @@ cStability_orig <- function(data, # n x p data matrix
 
       # Normalize = TRUE
       norm_val <- instabLookup(table(cl_1), table(cl_2))
-      m_instab_norm[b, which(kseq==k)] <- InStab - norm_val
+      m_instab_norm[b, which(kseq==k)] <- InStab / norm_val
 
     } # end for k
 
