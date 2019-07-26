@@ -280,8 +280,8 @@ cStability <- function(data, # n x p data matrix
   if(method %in% c('kmeans', 'hierarchical'))
 
   # On N
-  if(nrow(data) > max(kseq) * .63) stop('The maximum k cannot be larger than ca. 63% of the number of objects, the expected number of unique objects per bootstrap sample.')
-  if(predict == TRUE & nrow(data) > max(kseq) * .39) stop('For the model-free approach, the maximum k cannot be larger than ca. 39% of the number of objects, the expected number of unique objects in the intersection of two bootstrap samples.')
+  if(nrow(data) <= max(kseq) * .63) stop('The maximum k cannot be larger than ca. 63% of the number of objects, the expected number of unique objects per bootstrap sample.')
+  if(predict == TRUE & nrow(data) <= max(kseq) * .39) stop('For the model-free approach, the maximum k cannot be larger than ca. 39% of the number of objects, the expected number of unique objects in the intersection of two bootstrap samples.')
 
     # ---------- Create Containers ----------
 
