@@ -38,8 +38,9 @@ in order to avoid local minima.}
 \value{
 a list that contains the optimal k selected by the unnormalized and
    normalized instability method. It also includes a vector containing the averaged
-   instability path (over bootstrap samples) and a matrix containing the instability
-   path of each bootstrap sample for both the normalized and the unnormalized method.
+   instability path (over bootstrap samples), k-wise confidence intervals around these paths
+   and a matrix containing the instability path of each bootstrap sample for both the normalized
+   and the unnormalized method.
 }
 \description{
 Selection of number of clusters via \emph{model-based} or \emph{model-free},

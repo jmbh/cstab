@@ -2,7 +2,7 @@
 % Please edit documentation in R/cStability.R
 \name{cStability_mEst}
 \alias{cStability_mEst}
-\title{Selection of number of clusters via clustering instability}
+\title{!Deprecated! Selection of number of clusters via clustering instability}
 \usage{
 cStability_mEst(data, kseq = 2:20, nB = 10, norm = TRUE,
   predict = TRUE, method = "kmeans", linkage = "complete",
@@ -43,7 +43,7 @@ a list that contains the optimal k selected by the unnormalized and
    path of each bootstrap sample for both the normalized and the unnormalized method.
 }
 \description{
-Selection of number of clusters via \emph{model-based} or \emph{model-free},
+!Deprecated! Selection of number of clusters via \emph{model-based} or \emph{model-free},
   \emph{normalized} or \emph{unnormalized} clustering instability.
 }
 \examples{

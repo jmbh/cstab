@@ -1,6 +1,6 @@
-#' Selection of number of clusters via clustering instability
+#' !Deprecated! Selection of number of clusters via clustering instability
 #'
-#' Selection of number of clusters via \emph{model-based} or \emph{model-free},
+#' !Deprecated! Selection of number of clusters via \emph{model-based} or \emph{model-free},
 #'   \emph{normalized} or \emph{unnormalized} clustering instability.
 #'
 #' @param data a n x p data matrix of type numeric.
@@ -219,8 +219,9 @@ cStability_orig <- function(data, # n x p data matrix
 #'
 #' @return a list that contains the optimal k selected by the unnormalized and
 #'    normalized instability method. It also includes a vector containing the averaged
-#'    instability path (over bootstrap samples) and a matrix containing the instability
-#'    path of each bootstrap sample for both the normalized and the unnormalized method.
+#'    instability path (over bootstrap samples), k-wise confidence intervals around these paths
+#'    and a matrix containing the instability path of each bootstrap sample for both the normalized
+#'    and the unnormalized method.
 #'
 #' @references
 #'    Ben-Hur, A., Elisseeff, A., & Guyon, I. (2001). A stability based method for
@@ -257,7 +258,7 @@ cStability <- function(data, # n x p data matrix
                        nB   = 10, # number of bootstrap comparisons
                        norm = TRUE, # norm over pw equal assign,FALSE=as in Wang etal
                        predict = TRUE, # use prediction approach, if FALSE, use brute pair in equal cluster approach
-                       method    = 'kmeans', # or 'hierarchical'
+                       method  = 'kmeans', # or 'hierarchical'
                        linkage = 'complete', # or average, or ...
                        kmIter  = 5,
                        pbar = TRUE) # number of reruns of k-means algorithm
@@ -278,6 +279,9 @@ cStability <- function(data, # n x p data matrix
   # On type
   if(method %in% c('kmeans', 'hierarchical'))
 
+  # On N
+  if(nrow(data) > max(kseq) * .63) stop('The maximum k cannot be larger than ca. 63% of the number of objects, the expected number of unique objects per bootstrap sample.')
+  if(predict == TRUE & nrow(data) > max(kseq) * .39) stop('For the model-free approach, the maximum k cannot be larger than ca. 39% of the number of objects, the expected number of unique objects in the intersection of two bootstrap samples.')
 
     # ---------- Create Containers ----------
 
@@ -351,10 +355,12 @@ cStability <- function(data, # n x p data matrix
       # Normalize = TRUE
       M_1 = table(cl_1)
       M_2 = table(cl_2)
-      if(predict == FALSE) {
-        M_1 = M_1 * (nrow(data) / sum(M_1))
-        M_2 = M_2 * (nrow(data) / sum(M_2))
-        }
+
+      # old correction to ensure that
+      # if(predict == FALSE) {
+      #   M_1 = M_1 * (nrow(data) / sum(M_1))
+      #   M_2 = M_2 * (nrow(data) / sum(M_2))
+      #   }
       cs <- instab_simple_var(M_1, M_2)
       m_instab_norm[b, which(kseq==k)] <- .5 * (InStab - cs[1]) / cs[2]
 
@@ -368,6 +374,11 @@ cStability <- function(data, # n x p data matrix
   m_instab_M      = colMeans(m_instab)
   m_instab_norm_M = colMeans(m_instab_norm)
 
+  # extracting 95% CIs
+  m_instab_CI      = apply(m_instab,2,quantile,c(.025,.975))
+  m_instab_norm_CI = apply(m_instab_norm,2,quantile,c(.025,.975))
+
+  # identifying k_opt
   kopt_instab  = which(m_instab_M == min(m_instab_M))+(min(kseq)-1)
   kopt_instabN = which(m_instab_norm_M == min(m_instab_norm_M))+(min(kseq)-1)
 
@@ -384,6 +395,8 @@ cStability <- function(data, # n x p data matrix
                   "k_instab_norm"=kopt_instabN,
                   "instab_path"=m_instab_M,
                   "instab_path_norm"=m_instab_norm_M,
+                  "instab_path_CI" = m_instab_CI,
+                  "instab_path_norm_CI" = m_instab_norm_CI,
                   "instab_path_matrix"=m_instab,
                   "instab_path_nrom_matrix"=m_instab_norm,
                   'call'=f_call)
@@ -394,9 +407,9 @@ cStability <- function(data, # n x p data matrix
 
 } # EoF
 
-#' Selection of number of clusters via clustering instability
+#' !Deprecated! Selection of number of clusters via clustering instability
 #'
-#' Selection of number of clusters via \emph{model-based} or \emph{model-free},
+#' !Deprecated! Selection of number of clusters via \emph{model-based} or \emph{model-free},
 #'   \emph{normalized} or \emph{unnormalized} clustering instability.
 #'
 #' @param data a n x p data matrix of type numeric.
