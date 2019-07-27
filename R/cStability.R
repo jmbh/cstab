@@ -375,8 +375,8 @@ cStability <- function(data, # n x p data matrix
   m_instab_norm_M = colMeans(m_instab_norm)
 
   # extracting 95% CIs
-  m_instab_CI      = apply(m_instab,2,quantile,c(.025,.975))
-  m_instab_norm_CI = apply(m_instab_norm,2,quantile,c(.025,.975))
+  m_instab_CI      = apply(m_instab,2, quantile,c(.025,.975))
+  m_instab_norm_CI = apply(m_instab_norm,2, quantile,c(.025,.975))
 
   # identifying k_opt
   kopt_instab  = which(m_instab_M == min(m_instab_M))+(min(kseq)-1)
