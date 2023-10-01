@@ -4,7 +4,9 @@
 \name{cluster_example}
 \alias{cluster_example}
 \title{Cluster example}
-\format{An object of class \code{matrix} with 500 rows and 2 columns.}
+\format{
+An object of class \code{matrix} (inherits from \code{array}) with 500 rows and 2 columns.
+}
 \usage{
 cluster_example
 }

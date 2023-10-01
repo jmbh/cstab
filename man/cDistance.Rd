@@ -4,8 +4,14 @@
 \alias{cDistance}
 \title{Selection of number of clusters via distance-based measures}
 \usage{
-cDistance(data, kseq, method = "kmeans", linkage = "complete",
-  kmIter = 10, gapIter = 10)
+cDistance(
+  data,
+  kseq,
+  method = "kmeans",
+  linkage = "complete",
+  kmIter = 10,
+  gapIter = 10
+)
 }
 \arguments{
 \item{data}{a n x p data matrix of type numeric.}

@@ -4,9 +4,17 @@
 \alias{cStability_mEst}
 \title{!Deprecated! Selection of number of clusters via clustering instability}
 \usage{
-cStability_mEst(data, kseq = 2:20, nB = 10, norm = TRUE,
-  predict = TRUE, method = "kmeans", linkage = "complete",
-  kmIter = 5, pbar = TRUE)
+cStability_mEst(
+  data,
+  kseq = 2:20,
+  nB = 10,
+  norm = TRUE,
+  predict = TRUE,
+  method = "kmeans",
+  linkage = "complete",
+  kmIter = 5,
+  pbar = TRUE
+)
 }
 \arguments{
 \item{data}{a n x p data matrix of type numeric.}
